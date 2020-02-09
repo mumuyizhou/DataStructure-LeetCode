@@ -15,20 +15,22 @@ public class MaxSlidingWindow {
 
 
 	public int[] maxSlidingWindow(int[] nums, int k) {
+		if (nums.length == 0 || k == 1) {
+			return nums;
+		}
 		Deque<Integer> deque = new ArrayDeque<>(k);
-		for(int i = 0; i < 3;i++ ){
+		for (int i = 0; i < k; i++) {
 			deque.push(nums[i]);
-        }
+		}
 		List<Integer> output = new ArrayList<>();
-		LinkedList<Integer> temp = new LinkedList<>();
-		temp.
-		int  size = nums.length;
+		int size = nums.length;
 		output.add(Collections.max(deque));
-		for(int i =3;i<size;i++){
+		for (int i = k; i < size; i++) {
 			deque.push(nums[i]);
 			deque.removeLast();
 			output.add(Collections.max(deque));
 		}
 		return output.stream().mapToInt(Integer::valueOf).toArray();
+
 	}
 }
