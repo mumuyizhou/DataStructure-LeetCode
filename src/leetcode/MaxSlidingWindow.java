@@ -14,6 +14,13 @@ public class MaxSlidingWindow {
 	}
 
 
+	/**
+	 * 每次要对窗口内所有值取最大值
+	 *
+	 * @param nums
+	 * @param k
+	 * @return
+	 */
 	public int[] maxSlidingWindow(int[] nums, int k) {
 		if (nums.length == 0 || k == 1) {
 			return nums;
@@ -31,6 +38,14 @@ public class MaxSlidingWindow {
 			output.add(Collections.max(deque));
 		}
 		return output.stream().mapToInt(Integer::valueOf).toArray();
+	}
+
+	public int[] maxSlideWindowOpt(int[] nums, int k) {
+		int len = nums.length;
+		if (k == 1 || len == 0) {
+			return nums;
+		}
+		int[] output = new int[len - k + 1];
 
 	}
 }
