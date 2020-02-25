@@ -23,13 +23,13 @@ public class VerticalOrderTraversalOfaBinaryTree {
 		int prev = node[0];
 		List<Integer> xCord = new ArrayList<>();
 		xCord.add(node[2]);
-		while(!pq.isEmpty()){
+		while (!pq.isEmpty()) {
 			node = pq.poll();
-			if(node[0]!=prev){
+			if (node[0] != prev) {
 				out.add(xCord);
 				xCord = new ArrayList<>();
 				xCord.add(node[2]);
-			}else{
+			} else {
 				xCord.add(node[2]);
 			}
 			prev = node[0];
