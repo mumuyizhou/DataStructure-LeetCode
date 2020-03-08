@@ -89,8 +89,6 @@ public class Question160IntersectionOfTwoLinkedLists {
 		first = first.next;
 		tempNode.next = null;
 		watcherNode = tempNode;
-		boolean a = true;
-		boolean b = false;
 		while (first != null) {
 			tempNode = first;
 			first = first.next;
