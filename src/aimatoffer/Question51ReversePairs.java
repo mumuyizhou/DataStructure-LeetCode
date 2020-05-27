@@ -1,5 +1,7 @@
 package aimatoffer;
 
+import java.util.Arrays;
+
 /**
  * @author ZhouPan
  * @date 2020-05-27
@@ -8,7 +10,7 @@ public class Question51ReversePairs {
 	private int countReversePair = 0;
 
 	public int reversePairs(int[] nums) {
-		mergeCount(nums, 0, nums.length);
+		System.out.println(Arrays.toString(mergeCount(nums, 0, nums.length)));
 		return countReversePair;
 	}
 
@@ -32,7 +34,7 @@ public class Question51ReversePairs {
 		int countSorted = 0;
 		while (pLeft < lenLeft && pRight < lenRight) {
 			if (left[pLeft] > right[pRight]) {
-				countReversePair++;
+				countReversePair += lenLeft - pLeft;
 				result[countSorted] = right[pRight];
 				pRight++;
 			} else {
@@ -41,12 +43,16 @@ public class Question51ReversePairs {
 			}
 			countSorted++;
 		}
-		result[countSorted] = pLeft == lenLeft ? right[pRight] : left[pLeft];
+		while (pLeft < lenLeft || pRight < lenRight) {
+			result[countSorted++] = pLeft >= lenLeft ? right[pRight++] : left[pLeft++];
+		}
 		return result;
 	}
 
 	public static void main(String[] args) {
 		Question51ReversePairs reversePairs = new Question51ReversePairs();
-		System.out.println(reversePairs.reversePairs(new int[]{7, 5, 6, 4}));
+		System.out.println(reversePairs.reversePairs(new int[]{7, 5, 6, 4, 9, 54, 4654, 3132, 48, 5,
+				45, 121, 12, 1, 21, 2, 54, 54, 988744, 4, 64, 968, 4, 54587453, 54, 35, 474897435, 35}));
+
 	}
 }
