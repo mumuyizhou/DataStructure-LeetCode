@@ -1,6 +1,8 @@
 package aimatoffer;
 
 /**
+ * 单向链表
+ *
  * @author ZhouPan
  * @date 2020-05-28
  */
