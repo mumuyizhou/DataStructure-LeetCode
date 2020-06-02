@@ -1,18 +1,17 @@
 package aimatoffer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * 请实现两个函数，分别用来序列化和反序列化二叉树。
  * 示例: 
  * 你可以将以下二叉树：
- * 1
- * / \
- * 2   3
- * / \
- * 4   5
+ * 	    1
+ *     / \
+ *    2   3
+ *       / \
+ *      4   5
  * 序列化为 "[1,2,3,null,null,4,5]"
  *
  * @author ZhouPan
@@ -31,23 +30,15 @@ public class Question37SerializeBinaryTree {
 		builder.append("[");
 		List<List<TreeNode>> list = new ArrayList<>();
 		list = serializeTravelsal(root, 0, list);
-		int lastNotNullIndex = 0;
 		int listSize = list.size();
-		if (list.get(0).get(0) == null) {
-			builder.append("]");
-			return builder.toString();
-		}
 		for (int i = 0; i < listSize; i++) {
 			int size = list.get(i).size();
 			for (int j = 0; j < size; j++) {
 				TreeNode currentNode = list.get(i).get(j);
 				builder.append(currentNode == null ? "null" : currentNode.val).append(",");
-				if (currentNode != null) {
-					lastNotNullIndex = builder.length();
-				}
 			}
 		}
-		builder.delete(lastNotNullIndex - 1, builder.length());
+		builder.delete(builder.length() - 1, builder.length());
 		builder.append("]");
 		return builder.toString();
 	}

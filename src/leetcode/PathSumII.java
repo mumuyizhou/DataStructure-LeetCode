@@ -3,6 +3,8 @@ package leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
+import aimatoffer.TreeNode;
+
 public class PathSumII {
 	/**
 	 * Definition for a binary tree node.
