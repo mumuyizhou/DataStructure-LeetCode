@@ -1,6 +1,8 @@
 package aimatoffer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 请实现两个函数，分别用来序列化和反序列化二叉树。
@@ -27,16 +29,25 @@ public class Question37SerializeBinaryTree {
 		final int INIT_CAPACITY = 10;
 		StringBuilder builder = new StringBuilder(INIT_CAPACITY);
 		builder.append("[");
-		TreeNode[] orderArr = new TreeNode[INIT_CAPACITY];
-		orderArr = serializeTravelsal(root, 0, orderArr);
+		List<List<TreeNode>> list = new ArrayList<>();
+		list = serializeTravelsal(root, 0, list);
 		int lastNotNullIndex = 0;
-		for (int i = 0; i < orderArr.length; i++) {
-			if (orderArr[i] != null) lastNotNullIndex = i;
+		int listSize = list.size();
+		if (list.get(0).get(0) == null) {
+			builder.append("]");
+			return builder.toString();
 		}
-		for (int i = 0; i <= lastNotNullIndex; i++) {
-			builder.append(orderArr[i] == null ? "null" : orderArr[i].val).append(",");
+		for (int i = 0; i < listSize; i++) {
+			int size = list.get(i).size();
+			for (int j = 0; j < size; j++) {
+				TreeNode currentNode = list.get(i).get(j);
+				builder.append(currentNode == null ? "null" : currentNode.val).append(",");
+				if (currentNode != null) {
+					lastNotNullIndex = builder.length();
+				}
+			}
 		}
-		builder.delete(builder.length() - 1, builder.length());
+		builder.delete(lastNotNullIndex - 1, builder.length());
 		builder.append("]");
 		return builder.toString();
 	}
@@ -48,40 +59,61 @@ public class Question37SerializeBinaryTree {
 	 * @return
 	 */
 	public TreeNode deserialize(String data) {
+		if (data.length() == 2) {
+			return null;
+		}
 		TreeNode[] nodes = parseStrToNodeArr(data);
-		deserializeTraversal(nodes, 0);
-		return nodes[0];
-	}
-
-	private TreeNode[] serializeTravelsal(TreeNode root, int currentOrder, TreeNode[] orderArr) {
-		if (root == null) return orderArr;
-		if (currentOrder > orderArr.length) orderArr = doubleGrowArr(orderArr);
-		orderArr[currentOrder] = root;
-		orderArr = serializeTravelsal(root.left, currentOrder * 2 + 1, orderArr);
-		orderArr = serializeTravelsal(root.right, currentOrder * 2 + 2, orderArr);
-		return orderArr;
-	}
-
-	private <T> T[] doubleGrowArr(T[] orderArr) {
-		int len = orderArr.length;
-		int newLen = len << 1 + 2;
-		if (newLen - len < 0) newLen = len;
-		return Arrays.copyOf(orderArr, newLen);
-	}
-
-	private void deserializeTraversal(TreeNode[] nodes, int currentOrder) {
-		if (nodes[currentOrder] == null) return;
-		int leftSonPos = currentOrder * 2 + 1;
-		int rightSonPos = currentOrder * 2 + 2;
-		if (leftSonPos < nodes.length) {
-			nodes[currentOrder].left = nodes[leftSonPos];
-			deserializeTraversal(nodes, leftSonPos);
+		int len = nodes.length;
+		List<List<TreeNode>> list = new ArrayList<>();
+		int prev, p = 0, layer = 0;
+		if (nodes[0] != null) {
+			list.add(new ArrayList<>());
+			list.get(0).add(nodes[0]);
+			prev = 1;
+			p++;
+			layer++;
+		} else {
+			return null;
 		}
-		if (rightSonPos < nodes.length) {
-			nodes[currentOrder].right = nodes[rightSonPos];
-			deserializeTraversal(nodes, rightSonPos);
+		while (p < len) {
+			int endOfThisLayer = p - 1 + 2 * prev;
+			prev = 0;
+			while (p <= endOfThisLayer && p < len) {
+				if (list.size() <= layer) list.add(new ArrayList<>());
+				list.get(layer).add(nodes[p]);
+				prev = nodes[p] == null ? prev : prev + 1;
+				p++;
+			}
+			++layer;
 		}
+		int numOfLayers = list.size();
+		for (int i = 1; i < numOfLayers; i++) {
+			int layerSize = list.get(i).size();
+			int pLayer = 0, j = 0;
+			while (j < layerSize) {
+				while (list.get(i - 1).get(pLayer) == null) {
+					pLayer++;
+				}
+				list.get(i - 1).get(pLayer).left = list.get(i).get(j++);
+				list.get(i - 1).get(pLayer).right = j < layerSize ? list.get(i).get(j++) : null;
+				pLayer++;
+			}
+		}
+		return list.get(0).get(0);
 	}
+
+	private List<List<TreeNode>> serializeTravelsal(TreeNode root, int layer, List<List<TreeNode>> list) {
+		if (list.size() <= layer) list.add(new ArrayList<>());
+		if (root == null) {
+			list.get(layer).add(null);
+			return list;
+		}
+		list.get(layer).add(root);
+		list = serializeTravelsal(root.left, ++layer, list);
+		list = serializeTravelsal(root.right, layer, list);
+		return list;
+	}
+
 
 	private TreeNode[] parseStrToNodeArr(String nodeStr) {
 		nodeStr = nodeStr.substring(1, nodeStr.length() - 1);
@@ -94,5 +126,10 @@ public class Question37SerializeBinaryTree {
 			}
 		}
 		return nodes;
+	}
+
+	public static void main(String[] args) {
+		Question37SerializeBinaryTree tree = new Question37SerializeBinaryTree();
+		tree.serialize(tree.deserialize("[1,2,3,null,null,4,5]"));
 	}
 }
