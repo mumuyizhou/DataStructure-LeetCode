@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import aimatoffer.TreeNode;
+
 /**
  * @author 木木漪
  */
@@ -73,13 +75,3 @@ public class VerticalOrderTraversalOfaBinaryTree {
 	}
 }
 
-
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	public TreeNode(int val) {
-		this.val = val;
-	}
-}
