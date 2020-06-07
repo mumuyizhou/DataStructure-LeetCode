@@ -20,6 +20,10 @@ import java.util.Arrays;
  * @date 2020-06-07
  */
 public class Question416PartitionSubset {
+	/** dp解 13ms
+	 * @param nums
+	 * @return
+	 */
 	public boolean canPartition(int[] nums) {
 		int sum = 0;
 		for (int num : nums) {
@@ -39,6 +43,10 @@ public class Question416PartitionSubset {
 		return false;
 	}
 
+	/** dfs解  1ms
+	 * @param nums
+	 * @return
+	 */
 	public boolean canPartitionDfs(int[] nums) {
 		int sum = 0;
 		for (int num : nums) {
