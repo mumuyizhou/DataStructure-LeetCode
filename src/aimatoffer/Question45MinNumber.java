@@ -1,6 +1,5 @@
 package aimatoffer;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -22,9 +21,18 @@ import java.util.PriorityQueue;
  */
 public class Question45MinNumber {
 	public String minNumber(int[] nums) {
-		// TODO: 2020/6/8 解出来！
 		StringBuilder builder = new StringBuilder(2 * nums.length);
-		PriorityQueue<String> pq = new PriorityQueue<>((o1, o2) -> Integer.parseInt(o1 + o2) - Integer.parseInt(o2 + o1));
+		PriorityQueue<String> pq = new PriorityQueue<>((String o1, String o2) -> {
+			String o1o2 = o1 + o2;
+			String o2o1 = o2 + o1;
+			int len = o1o2.length();
+			for (int i = 0; i < len; i++) {
+				char o1o2Cur = o1o2.charAt(i);
+				char o2o1Cur = o2o1.charAt(i);
+				if (o1o2Cur != o2o1Cur) return o1o2Cur - o2o1Cur;
+			}
+			return 0;
+		});
 		for (int num : nums) {
 			pq.add(String.valueOf(num));
 		}
@@ -37,5 +45,7 @@ public class Question45MinNumber {
 	public static void main(String[] args) {
 		Question45MinNumber minNumber = new Question45MinNumber();
 		System.out.println(minNumber.minNumber(new int[]{3, 304564561, 344563212, 5, 9, 0}));
+//		304564561
+//		344563212
 	}
 }
