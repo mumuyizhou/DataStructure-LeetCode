@@ -5,21 +5,31 @@ package aimatoffer;
  * @date 2020-06-06
  */
 public class Temp {
-	public int count() {
-		int n = 10000, count = 0, result = 1;
-		while (n >= 1) {
-			result *= n;
-			n--;
-			if (result % 10 == 0) {
-				count++;
-				result/=10;
-			}
+	public int cuttingRope(int n) {
+		if (n <= 3) return n - 1;
+		int remainder = n % 3;
+		int num = n / 3;
+		switch (remainder) {
+			case 1:
+				return (int) (solveBigInteger(num - 1) * 4 % 1000000007);
+			case 2:
+				return (int) (solveBigInteger(num) * 2 % 1000000007);
+			default:
+				return (int) (solveBigInteger(num) % 1000000007);
 		}
-		return count;
+	}
+
+	public long solveBigInteger(int n) {
+		long result = 1;
+		while (n-- > 0) {
+			result *= 3;
+			result %= 1000000007;
+		}
+		return result;
 	}
 
 	public static void main(String[] args) {
 		Temp temp = new Temp();
-		System.out.println(temp.count());
+		System.out.println(temp.cuttingRope(1000));
 	}
 }
