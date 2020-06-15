@@ -1,9 +1,6 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.lang.model.type.IntersectionType;
+import java.util.*;
 
 import aimatoffer.Question37SerializeBinaryTree;
 import aimatoffer.TreeNode;
@@ -29,41 +26,43 @@ import aimatoffer.TreeNode;
  * @date 2020-06-15
  */
 public class Question102SymmetricTree {
-	public boolean isSymmetric(TreeNode root) {
-		List<Integer> list = new ArrayList<>(1000);
-		inorderTraversal(root, list);
-		int size = list.size();
-		if (size % 2 == 0) return false;
-		int mid = size / 2;
-		for (int i = 0; i <= mid; i++) {
-			if (!list.get(i).equals(list.get(size - 1 - i))) return false;
+	/**
+	 * 这个问题解法的关键在于两个指针
+	 *
+	 * @param root
+	 * @return
+	 */
+	public boolean isSymmetricIteration(TreeNode root) {
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.offer(root);
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			TreeNode p = queue.poll();
+			TreeNode q = queue.poll();
+			if (p == null && q == null) continue;
+			if (p == null || q == null) return false;
+			if (p.val != q.val) return false;
+			queue.offer(p.left);
+			queue.offer(q.right);
+			queue.offer(p.right);
+			queue.offer(q.left);
 		}
 		return true;
 	}
 
-	public void inorderTraversal(TreeNode node, List<Integer> travList) {
-		if (node != null) {
-			if (node.left == null && node.right == null) {
-				travList.add(node.val);
-			} else {
-				if (node.left == null) {
-					travList.add(Integer.MIN_VALUE);
-				} else {
-					inorderTraversal(node.left, travList);
-				}
-				travList.add(node.val);
-				if (node.right == null) {
-					travList.add(Integer.MIN_VALUE);
-				} else {
-					inorderTraversal(node.right, travList);
-				}
-			}
-		}
+	public boolean isSymmetric(TreeNode root) {
+		return recursion(root, root);
 	}
 
-		public static void main (String[]args){
-			Question102SymmetricTree symmetricTree = new Question102SymmetricTree();
-			Question37SerializeBinaryTree serializeBinaryTree = new Question37SerializeBinaryTree();
-			System.out.println(symmetricTree.isSymmetric(serializeBinaryTree.deserialize("[1,2,2,2,null,2]")));
-		}
+	public boolean recursion(TreeNode p, TreeNode q) {
+		if (p == null && q == null) return true;
+		if (p == null || q == null) return false;
+		return p.val == q.val && recursion(p.right, q.left) && recursion(p.left, q.right);
 	}
+
+	public static void main(String[] args) {
+		Question102SymmetricTree symmetricTree = new Question102SymmetricTree();
+		Question37SerializeBinaryTree serializeBinaryTree = new Question37SerializeBinaryTree();
+		System.out.println(symmetricTree.isSymmetric(serializeBinaryTree.deserialize("[1,2,2,3,4,4,3]")));
+	}
+}
