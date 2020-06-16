@@ -21,10 +21,10 @@ package aimatoffer;
  * @date 2020-06-16
  */
 public class Question59MaxValueOfQueue {
-	ListNode2 dequeHead;
-	ListNode2 dequeTail;
-	ListNode2 head;
-	ListNode2 tail;
+	ListNode dequeHead;
+	ListNode dequeTail;
+	ListNode head;
+	ListNode tail;
 
 	public Question59MaxValueOfQueue() {
 
@@ -36,7 +36,7 @@ public class Question59MaxValueOfQueue {
 
 	public void push_back(int value) {
 		if (dequeHead == null) {
-			dequeHead = new ListNode2(value);
+			dequeHead = new ListNode(value);
 			dequeTail = dequeHead;
 		} else {
 			while (dequeTail.val < value) {
@@ -46,7 +46,7 @@ public class Question59MaxValueOfQueue {
 					break;
 				}
 			}
-			ListNode2 tmp = new ListNode2(value);
+			ListNode tmp = new ListNode(value);
 			if (dequeHead == null) {
 				dequeHead = tmp;
 				dequeTail = dequeHead;
@@ -58,10 +58,10 @@ public class Question59MaxValueOfQueue {
 		}
 
 		if (tail == null) {
-			head = new ListNode2(value);
+			head = new ListNode(value);
 			tail = head;
 		} else {
-			tail.next = new ListNode2(value);
+			tail.next = new ListNode(value);
 			tail = tail.next;
 		}
 	}
@@ -95,12 +95,4 @@ public class Question59MaxValueOfQueue {
 }
 
 
-class ListNode2 {
-	int val;
-	ListNode2 next;
-	ListNode2 prev;
 
-	public ListNode2(int val) {
-		this.val = val;
-	}
-}

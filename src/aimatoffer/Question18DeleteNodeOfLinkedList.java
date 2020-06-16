@@ -17,11 +17,11 @@ package aimatoffer;
  * @date 2020-06-15
  */
 public class Question18DeleteNodeOfLinkedList {
-	public ListNode2 deleteNode(ListNode2 head, int val) {
+	public ListNode deleteNode(ListNode head, int val) {
 		if (head == null) return null;
 		if (head.val == val) return head.next;
-		ListNode2 prev = head;
-		ListNode2 p = head.next;
+		ListNode prev = head;
+		ListNode p = head.next;
 		while (p != null) {
 			if (p.val == val) {
 				prev.next = p.next;
