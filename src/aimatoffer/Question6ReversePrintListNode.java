@@ -1,7 +1,5 @@
 package aimatoffer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -14,8 +12,8 @@ import java.util.Stack;
  * @date 2020-05-29
  */
 public class Question6ReversePrintListNode {
-	public int[] reversePrint(ListNode head) {
-		Stack<ListNode> stack = new Stack<>();
+	public int[] reversePrint(ListNode2 head) {
+		Stack<ListNode2> stack = new Stack<>();
 		while (head != null) {
 			stack.push(head);
 			head = head.next;

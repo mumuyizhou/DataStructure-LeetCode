@@ -1,7 +1,5 @@
 package aimatoffer;
 
-import java.util.List;
-
 /**
  * 输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
  * 示例1：
@@ -14,8 +12,8 @@ import java.util.List;
  * @date 2020-05-29
  */
 public class Question25MergeTwoListNodes {
-	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-		ListNode p1 = l1, p2 = l2, head = l1.val < l2.val ? l1 : l2;
+	public ListNode2 mergeTwoLists(ListNode2 l1, ListNode2 l2) {
+		ListNode2 p1 = l1, p2 = l2, head = l1.val < l2.val ? l1 : l2;
 		while (l1 != null && l2 != null) {
 			if (l1.val < l2.val) {
 				while (l1 != null && l1.val < l2.val) {
