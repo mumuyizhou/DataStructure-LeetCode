@@ -25,7 +25,7 @@ import aimatoffer.TreeNode;
  * @author ZhouPan
  * @date 2020-06-15
  */
-public class Question102SymmetricTree {
+public class Question101SymmetricTree {
 	/**
 	 * 这个问题解法的关键在于两个指针
 	 *
@@ -61,7 +61,7 @@ public class Question102SymmetricTree {
 	}
 
 	public static void main(String[] args) {
-		Question102SymmetricTree symmetricTree = new Question102SymmetricTree();
+		Question101SymmetricTree symmetricTree = new Question101SymmetricTree();
 		Question37SerializeBinaryTree serializeBinaryTree = new Question37SerializeBinaryTree();
 		System.out.println(symmetricTree.isSymmetric(serializeBinaryTree.deserialize("[1,2,2,3,4,4,3]")));
 	}
