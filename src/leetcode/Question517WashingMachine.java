@@ -30,26 +30,25 @@ package leetcode;
  * @author ZhouPan
  * @date 2020-06-16
  */
-public class Question517SuperLaundry {
+public class Question517WashingMachine {
 	public int findMinMoves(int[] machines) {
-		int sum = 0;
-		int len = machines.length;
-		int finalEach = 0;
-		int result = 0;
-		for (int i = 0; i < len; i++) {
-			sum += machines[i];
+		int sum = 0, len = machines.length, avg, result = 0;
+		for (int machine : machines) {
+			sum += machine;
 		}
-		if (sum % len != 0) {
-			return -1;
-		} else {
-			finalEach = sum / len;
+		if (sum % len != 0) return -1;
+		avg = sum / len;
+		int count = 0;
+		for (int clothes : machines) {
+			clothes -= avg;
+			count += clothes;
+			result = Math.max(Math.max(Math.abs(clothes),Math.abs(result)), count);
 		}
-
-		return 0;
+		return result;
 	}
 
 	public static void main(String[] args) {
-		Question517SuperLaundry superLaundry = new Question517SuperLaundry();
-		System.out.println(superLaundry.findMinMoves(new int[]{1, 0, 5}));
+		Question517WashingMachine superLaundry = new Question517WashingMachine();
+		System.out.println(superLaundry.findMinMoves(new int[]{5, 5, 2,0}));
 	}
 }
