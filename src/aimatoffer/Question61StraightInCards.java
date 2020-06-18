@@ -1,8 +1,6 @@
 package aimatoffer;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 从扑克牌中随机抽5张牌，判断是不是一个顺子，即这5张牌是不是连续的。
@@ -43,17 +41,34 @@ public class Question61StraightInCards {
 	public void quickSort(int[] arr, int low, int high) {
 		if (low >= high - 1) return;
 		int bench = arr[low];
-
-		for (; ; ) {
+		int rawLow = low;
+		int rawHigh = high--;
+		outer:
+		while (high > low) {
 			while (arr[high] >= bench) {
 				high--;
+				if (high == low){
+					arr[high] = bench;
+					break outer;
+				}
 			}
 			arr[low++] = arr[high];
-			while(arr[low] <= bench){
+			if (high == low){
+				arr[high] = bench;
+				break;
+			}
+			while (arr[low] <= bench) {
 				low++;
+				if (high == low){
+					arr[high] = bench;
+					break outer;
+				}
 			}
 			arr[high--] = arr[low];
 		}
+		arr[high] = bench;
+		quickSort(arr, rawLow, low);
+		quickSort(arr, low + 1, rawHigh);
 	}
 
 	public boolean isStraightBySet(int[] nums) {
@@ -68,5 +83,24 @@ public class Question61StraightInCards {
 			set.add(num);
 		}
 		return max - min < 5;
+	}
+
+	public static void main(String[] args) {
+		Question61StraightInCards cards = new Question61StraightInCards();
+		int len = 10000000;
+		int[] randonArr = new int[len];
+		Random random = new Random();
+		for (int i = 0; i < randonArr.length; i++) {
+			randonArr[i] = random.nextInt(len);
+		}
+		int[] ints = {15, 30, 6, 7, 17, 5};
+		cards.quickSort(randonArr, 0, randonArr.length);
+		for (int i = 1; i < randonArr.length; i++) {
+			if(randonArr[i] < randonArr[i-1]){
+				System.out.println("排序错误");
+				break;
+			}
+		}
+		System.out.println("");
 	}
 }
