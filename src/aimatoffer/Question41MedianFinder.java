@@ -1,5 +1,6 @@
 package aimatoffer;
 
+import java.beans.beancontext.BeanContext;
 import java.util.Arrays;
 
 /**
@@ -19,11 +20,17 @@ public class Question41MedianFinder {
 	}
 
 	public void addNum(int num) {
+		//todo 输入-1,-2,-3时最大堆有-1和-3，最小堆只有-2
 		int maxSize = maxHeap.size;
 		int minSize = minorHeap.size;
-		if (maxSize == 0) maxHeap.add(num);
-		if (minSize == 0) minorHeap.add(num);
-		if (minSize > maxSize) {
+		if (maxSize == 0) {
+			maxHeap.add(num);
+			return;};
+		if (minSize == 0) {
+			minorHeap.add(num);
+			return;
+		}
+		if (minSize >= maxSize) {
 			if (num > minorHeap.getHead()) {
 				maxHeap.add(minorHeap.getHead());
 				minorHeap.setHead(num);
@@ -48,9 +55,10 @@ public class Question41MedianFinder {
 
 	public static void main(String[] args) {
 		Question41MedianFinder medianFinder = new Question41MedianFinder();
-		medianFinder.addNum(1);
-		medianFinder.addNum(2);
-		medianFinder.addNum(3);
+		medianFinder.addNum(-1);
+		medianFinder.addNum(-2);
+		medianFinder.addNum(-3);
+		System.out.println("");
 	}
 
 }
@@ -127,19 +135,24 @@ class Heap {
 					heap[pos] = heap[left];
 					heap[left] = s;
 					pos = left;
+				}else {
+					break;
 				}
 			} else {
-				if (left < size && right < size) {
+				if (right < size) {
 					int maxSonPos = heap[left] < heap[right] ? left : right;
 					if (s <= heap[maxSonPos]) break;
 					heap[pos] = heap[maxSonPos];
 					heap[maxSonPos] = s;
 					pos = maxSonPos;
 				}
-				if (right <= size && heap[left] < heap[pos]) {
+				if (left <= size && heap[left] < heap[pos]) {
 					heap[pos] = heap[left];
 					heap[left] = s;
 					pos = left;
+				}
+				else{
+					break;
 				}
 			}
 		}

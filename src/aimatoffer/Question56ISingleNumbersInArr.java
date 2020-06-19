@@ -24,7 +24,7 @@ public class Question56ISingleNumbersInArr {
 	 * @return
 	 */
 	public int[] singleNumbers(int[] nums) {
-		
+		return null;
 	}
 
 	public int[] singleNumbersStupidWay(int[] nums) {
