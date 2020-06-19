@@ -41,28 +41,35 @@ public class Question5LongestPalindrome {
 
 	public String longestPalindromeDp(String s) {
 		int len = s.length();
-		String[][] dp = new String[len][len];
+		boolean[][] dp = new boolean[len][len];
 		for (int i = 0; i < len; i++) {
-			dp[i][i] = s.substring(i, i + 1);
+			dp[i][i] = true;
 		}
+		int maxLen = 0;
+		int startPos = 0;
 		for (int i = 0; i < len; i++) {
 			for (int j = 0; j < i; j++) {
 				if (s.charAt(i) == s.charAt(j)) {
 					if (i - j > 1) {
-						dp[j][i] = (i - j - 1 == dp[j + 1][i - 1].length()) ?
-								s.substring(j, i + 1) : dp[j + 1][i - 1];
-					} else {
-						dp[j][i] = s.substring(j, i + 1);
-					}
-				} else {
-					if (i - j > 1) {
 						dp[j][i] = dp[j + 1][i - 1];
 					} else {
-						dp[j][i] = s.substring(j, j + 1);
+						dp[j][i] = true;
 					}
+				} else {
+					dp[j][i] = false;
+				}
+				if (dp[j][i] && i - j + 1 > maxLen) {
+					maxLen = i - j + 1;
+					startPos = j;
 				}
 			}
+
 		}
-		return dp[0][len - 1];
+		return s.substring(startPos, maxLen + startPos);
+	}
+
+	public static void main(String[] args) {
+		Question5LongestPalindrome palindrome = new Question5LongestPalindrome();
+		System.out.println(palindrome.longestPalindromeDp("asdhkjhhasd"));
 	}
 }
