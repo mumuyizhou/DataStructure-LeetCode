@@ -37,9 +37,9 @@ public class Question494TargetSum {
 		sum = (sumNums + S) >>> 1;
 		int[] dp = new int[sum + 1];
 		dp[0] = 1;
-		for (int i = 0; i < len; i++) {
+		for (int num : nums) {
 			for (int j = sum; j > 0; j--) {
-				dp[j] = dp[j] + (j - nums[i] >= 0 ? dp[j - nums[i]] : 0);
+				dp[j] = dp[j] + (j - num >= 0 ? dp[j - num] : 0);
 			}
 		}
 		return dp[sum];
