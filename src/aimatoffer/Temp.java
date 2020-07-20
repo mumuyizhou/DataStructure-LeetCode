@@ -1,5 +1,8 @@
 package aimatoffer;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /**
  * @author ZhouPan
  * @date 2020-06-06
@@ -19,6 +22,7 @@ public class Temp {
 		}
 	}
 
+
 	public long solveBigInteger(int n) {
 		long result = 1;
 		while (n-- > 0) {
@@ -29,7 +33,7 @@ public class Temp {
 	}
 
 	public static void main(String[] args) {
-		Temp temp = new Temp();
-		System.out.println(temp.cuttingRope(1000));
+		System.out.println(Integer.toBinaryString(121));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	}
 }
