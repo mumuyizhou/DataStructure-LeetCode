@@ -1,4 +1,4 @@
-import java.util.Stack;
+
 
 /**
  * @author ZhouPan
@@ -10,6 +10,7 @@ class Solution {
 		int push = 0;
 		int pop = 0;
 		int q = 0;
+
 		while(push <  lenPush){
 			if(pushed[push] == popped[q]){
 				while(pushed[pop]== popped[q]){

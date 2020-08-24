@@ -64,6 +64,53 @@ public class Question207Courses {
 	public static void main(String[] args) {
 		Question207Courses question207Courses = new Question207Courses();
 		System.out.println(question207Courses.canFinish(4, new int[][]{{2, 0}, {1, 0}, {3, 1}, {3, 2}, {1, 3}}));
+		System.out.println(question207Courses.intToRoman(1994));
+
+	}
+
+	public String intToRoman(int num) {
+		StringBuilder builder = new StringBuilder();
+		int thou = num / 1000;
+		for (int i = 0; i < thou; i++) {
+			builder.append("M");
+		}
+		num = num % 1000;
+		if (num == 0) return builder.toString();
+		int hun = num / 100;
+		num = num % 100;
+		builder.append(handle(hun, "C", "D", "M"));
+		if (num == 0) return builder.toString();
+		int ten = num / 10;
+		num = num % 10;
+		builder.append(handle(ten, "X", "L", "C"));
+		if (num == 0) return builder.toString();
+		builder.append(handle(num, "I", "V", "X"));
+		return builder.toString();
+	}
+
+	public String handle(int num, String left, String mid, String right) {
+		if (num >= 5) {
+			if (num == 9) {
+				return left + right;
+			} else {
+				StringBuilder builder = new StringBuilder();
+				builder.append(mid);
+				for (int i = 0, j = num - 5; i < j; i++) {
+					builder.append(left);
+				}
+				return builder.toString();
+			}
+		} else {
+			if (num == 4) {
+				return left + mid;
+			} else {
+				StringBuilder builder = new StringBuilder();
+				for (int i = 0; i < num; i++) {
+					builder.append(left);
+				}
+				return builder.toString();
+			}
+		}
 	}
 
 	class Node {
